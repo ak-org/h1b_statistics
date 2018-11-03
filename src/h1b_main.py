@@ -1,5 +1,5 @@
 from h1b_readfile import read_h1b_data
-from h1b_process import h1b_process
+from h1b_process import h1b_process_no_pandas
 from optparse import *
 import pandas as pd
 
@@ -26,19 +26,22 @@ def main():
     params = parse_input_params()
     (opt, args) = params.parse_args()
     h1b_datafile = opt.f_input
-    h1b_state_ofilename = opt.f_output_occup
-    h1b_occupation_ofilename = opt.f_output_state
-
+    h1b_state_ofilename = opt.f_output_state
+    h1b_occupation_ofilename = opt.f_output_occup
     h1b = read_h1b_data(h1b_datafile)
-    h1b_dataframe = h1b.read_h1b_file()
-    if h1b_dataframe.shape[0] > 0:
-        h1b_state_df = h1b_process(h1b_dataframe, h1b_state_ofilename, h1b_occupation_ofilename)
-        h1b_state_df.top_occupation()
-        h1b_state_df.top_state()
-        return 0
-    else:
-        print("FATAL ERROR OCCURRED WHILE READING INPUT FILE")
-        return -1    
+    h1b_data = h1b.read_h1b_file()
+
+    h1b = h1b_process_no_pandas(h1b_data, h1b_state_ofilename, h1b_occupation_ofilename)
+    certified_cases_count = h1b.get_certified_cases_count()
+    
+    top10_states = h1b.find_top_state()
+    h1b.save_to_states_file(top10_states, certified_cases_count, h1b_state_ofilename)
+
+    top10_occupations = h1b.find_top_occupation()
+    h1b.save_to_occupations_file(top10_occupations, certified_cases_count, h1b_occupation_ofilename)
+
+
+    
 
 if __name__ == "__main__":
     main()
