@@ -26,5 +26,7 @@ python -O ./src/h1b_main.py --input=<csv file name with full or relative path> -
 if no input and output parameters are specified, following default parameters are used.
 
 input ='./input/h1b_input.csv'
+
 output_state ='./output/top_10_states.txt'
+
 output_occup = './output/top_10_occupations.txt'
