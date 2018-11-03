@@ -7,9 +7,13 @@ class read_h1b_data():
     '''
     Purpose : Read the CSV file containing h1b related data
     Input Parameter : input filename
-    Returns : dataframe containing csv data
+    Returns : array containing csv data
     '''
     def __sanitize_line(self, line):
+        '''
+        This function removes semi-colon embedded within the strings enclosed by quotes.
+        without this correction, the program is unable to parse the fields correctly.
+        '''
         quote_start = False
         quote_end = True
         line = list(line)
@@ -31,7 +35,6 @@ class read_h1b_data():
     def read_h1b_file(self):
         h1b_data = []
         if os.path.isfile(self.filename):
-            #h1b_fd = open(self.filename, mode='r', encoding = "utf8")
             with io.open(self.filename, mode='r', encoding = "utf8") as h1b_fd:
                 for line in h1b_fd:
                     line = self.__sanitize_line(line)

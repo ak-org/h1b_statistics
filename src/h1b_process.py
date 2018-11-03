@@ -124,8 +124,6 @@ class h1b_process_no_pandas():
         for k in reverse_state_keystore:
             reverse_state_keystore[k] = sorted(reverse_state_keystore.get(k))
 
-        if __debug__:
-            print("key store for occupations : ",  reverse_state_keystore)
         return reverse_state_keystore
 
     def save_to_occupations_file(self, keystore, count, occup_filename):
