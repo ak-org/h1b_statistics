@@ -1,6 +1,7 @@
 import pandas as pd
 import os.path
 import sys
+import io
 
 class read_h1b_data():
     '''
@@ -30,17 +31,18 @@ class read_h1b_data():
     def read_h1b_file(self):
         h1b_data = []
         if os.path.isfile(self.filename):
-            h1b_fd = open(self.filename, mode='r', encoding = "utf8")
-            for line in h1b_fd:
-                line = self.__sanitize_line(line)
-                h1b_data.append(line.split(';'))
-            if __debug__:
-                if  len(h1b_data) > 0:
-                    print("***** Successfully Read input file : " + self.filename)
-                    print("***** Size = ", len(h1b_data))
-                else:    
-                    print("***** ERROR while reading input file : " + self.filename)
-                    print("***** Size = ", len(h1b_data))
+            #h1b_fd = open(self.filename, mode='r', encoding = "utf8")
+            with io.open(self.filename, mode='r', encoding = "utf8") as h1b_fd:
+                for line in h1b_fd:
+                    line = self.__sanitize_line(line)
+                    h1b_data.append(line.split(';'))
+                if __debug__:
+                    if  len(h1b_data) > 0:
+                        print("***** Successfully Read input file : " + self.filename)
+                        print("***** Size = ", len(h1b_data))
+                    else:    
+                        print("***** ERROR while reading input file : " + self.filename)
+                        print("***** Size = ", len(h1b_data))
         else:
             print("***** Error : File Not found!")
         return h1b_data
