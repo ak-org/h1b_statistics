@@ -9,9 +9,9 @@ def parse_input_params():
     
     # define default values for input and output files
 
-    SAMPLE_INPUT_FILE='./input/h1b_input.csv'
-    OUTPUT_STATES_FILE='./output/top_10_states.txt'
-    OUTPUT_OCCUP_FILE = './output/top_10_occupations.txt'
+    SAMPLE_INPUT_FILE='../input/h1b_input.csv'
+    OUTPUT_STATES_FILE='../output/top_10_states.txt'
+    OUTPUT_OCCUP_FILE = '../output/top_10_occupations.txt'
 
     parser = OptionParser()
     parser.add_option("--input", type="string", dest="f_input", help="Input semi-colon seperate CSV data file name")
